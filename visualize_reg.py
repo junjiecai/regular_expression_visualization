@@ -15,7 +15,6 @@ def _get_color_span(p, s, color_captured_group=False):
         return black_string.render()
     span = r.span()
 
-
     matched_string = s[span[0]:span[1]]
 
     blue_string = StyledSpan(matched_string, 'black', None, True)
@@ -38,7 +37,7 @@ class StyledSpan:
     def render(self):
         border_style = 'border: 1px solid red' if self.border else ''
         if len(self.sub_colored_strings) == 0:
-            return "<span style='color:{};{}'>{}</span>".format(self.color, border_style, self.string)
+            return "<span style='font-size:18px;color:{};{}'>{}</span>".format(self.color, border_style, self.string)
         else:
             strs = []
             # string = html.escape(self.string)
@@ -50,7 +49,7 @@ class StyledSpan:
                 string = last_part
             strs.append(last_part)
 
-            string = "<span style='color:{};{}'>{}</span>".format(self.color, border_style, ''.join(strs))
+            string = "<span style='font-size:18px;color:{};{}'>{}</span>".format(self.color, border_style, ''.join(strs))
             return string
 
 
@@ -58,10 +57,10 @@ def search_pattern(patterns, strings, color_captured_group=False):
     html_string = ''
     for string in strings:
         string = html.escape(string)
-        html_string += '<td>{}</td>'.format(string)
+        html_string += '<td style="font-size:18px">{}</td>'.format(string)
         for pattern in patterns:
             html_string += "<td>{}</td>".format(_get_color_span(pattern, string, color_captured_group))
         html_string = '<tr>' + html_string + '</tr>'
-    header = '<tr><th></th>{}</tr>'.format(''.join(['<th>{}</th>'.format(pattern) for pattern in patterns]))
+    header = '<tr><th></th>{}</tr>'.format(''.join(['<th style="font-size:18px">{}</th>'.format(pattern) for pattern in patterns]))
     html_string = '<table>' + header + html_string + '</table>'
     return HTML(html_string)
